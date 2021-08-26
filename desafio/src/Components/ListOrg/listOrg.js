@@ -8,7 +8,6 @@ export default function Listorg({ data }) {
         <View style={styles.container}>
             <View style={styles.card}>
                 <View style={styles.cardText}>
-                    <Text>{data.id}</Text>
                     <Text>{data.nome}</Text>
                     <Text>{data.empresa}</Text>
                     <TouchableOpacity onPress={() => alert(data.id)} style={styles.btnSave}>

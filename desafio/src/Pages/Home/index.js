@@ -26,7 +26,8 @@ export default function Home({ navigation }) {
         const filterList = items.filter((item) => {
             const itemFilter = item.nome ? item.nome.toUpperCase() : ''.toUpperCase()
             const newText = text.toUpperCase();
-            return itemFilter.indexOf(newText) > -1;
+            return itemFilter.indexOf(newText) > -1
+
         });
 
         setList(filterList)
@@ -53,13 +54,25 @@ export default function Home({ navigation }) {
                     <Text style={{ color: '#808080' }}>Veja as organizações em tendência no GitHub</Text>
                 </View>
             </View>
-            <FlatList
-                data={list}
-                showsVerticalScrollIndicator={false}
-                keyboardShouldPersistTaps="handled"
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => <Listorg data={item} />}
-            />
+
+            {list.length === 0 ?
+                (
+                    <View style={{height: 550}}>
+                        <Text>Lista Vazia</Text>
+                    </View>
+                ) : (
+                    <FlatList
+                        data={list}
+                        showsVerticalScrollIndicator={false}
+                        keyboardShouldPersistTaps="handled"
+                        keyExtractor={item => item.id}
+                        renderItem={({ item }) => <Listorg data={item} />}
+                    />
+                )}
+
+
+
+
 
 
             <ButtonFav
