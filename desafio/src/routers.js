@@ -11,7 +11,7 @@ export default function Routers() {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={Home}/>
+                <Stack.Screen name="Home" component={Home} options={{headerShown:false}}/>
                 <Stack.Screen name="Favorito" component={Favorito}/>
             </Stack.Navigator>
         </NavigationContainer>
