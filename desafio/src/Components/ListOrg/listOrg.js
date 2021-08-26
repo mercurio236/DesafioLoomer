@@ -4,7 +4,6 @@ import styles from './styles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Listorg({ data }) {
-
     return (
         <View style={styles.container}>
             <View style={styles.card}>
