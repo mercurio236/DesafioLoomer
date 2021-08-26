@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     },
     card:{
         width: 370,
-        height:140,
+        height:'90%',
         backgroundColor:'#FFF',
         marginBottom: 20,
         borderRadius:10

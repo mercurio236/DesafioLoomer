@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import IconsFa from 'react-native-vector-icons/Feather';
 import styles from './styles'
 import Listorg from '../../Components/ListOrg/listOrg';
 import ButtonFav from '../../Components/Buttons/buttonFav';
+import api from '../../Connections/api';
 
 export default function Home({ navigation }) {
     const data = [
@@ -14,17 +16,29 @@ export default function Home({ navigation }) {
     ]
 
     useEffect(() => {
-        setList(data)
-        setItems(data)
-    }, [])
+        setList(repo)
+        setItems(repo)
+        requisicao()
+    }, [list, text, repo, items])
 
     const [text, setText] = useState('');
     const [list, setList] = useState('');
     const [items, setItems] = useState('');
+    const [repo, setRepo] = useState([])
+
+    async function requisicao() {
+      await api.get(`users/`+ text +`/repos`)
+            .then((res) => {
+                setList(res.data)
+            })
+            .catch((e) => {
+                console(e)
+            })
+    }
 
     function SearchFilterFunction(text) {
         const filterList = items.filter((item) => {
-            const itemFilter = item.nome ? item.nome.toUpperCase() : ''.toUpperCase()
+            const itemFilter = item.name ? item.name.toUpperCase() : ''.toUpperCase()
             const newText = text.toUpperCase();
             return itemFilter.indexOf(newText) > -1
 
@@ -43,7 +57,7 @@ export default function Home({ navigation }) {
                     onChangeText={(t) => SearchFilterFunction(t)}
                     value={text}
                 />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={requisicao}>
                     <Icon name="search" size={30} color="#131313" />
                 </TouchableOpacity>
             </View>
@@ -57,8 +71,9 @@ export default function Home({ navigation }) {
 
             {list.length === 0 ?
                 (
-                    <View style={{height: 550}}>
-                        <Text>Lista Vazia</Text>
+                    <View style={{ height: 490, alignItems: 'center', margin: 40 }}>
+                        <IconsFa name="frown" size={40} />
+                        <Text style={{ textAlign: 'center', display: 'flex', }}>Ops, não encontramos uma organização com este nome</Text>
                     </View>
                 ) : (
                     <FlatList
